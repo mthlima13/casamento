@@ -44,6 +44,17 @@ public class AdminController {
                 .build();
     }
 
+    @PostMapping("/convidados")
+    public Convidado criarConvidado(@RequestBody CreateGuestRequest request) {
+        return rsvpService.criarConvidado(request.getNome(), request.getAcompanhantesPermitidos());
+    }
+
+    @Data
+    public static class CreateGuestRequest {
+        private String nome;
+        private Integer acompanhantesPermitidos;
+    }
+
     @Data
     @Builder
     public static class DashboardSummary {

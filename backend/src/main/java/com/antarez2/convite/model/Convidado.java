@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -25,6 +27,11 @@ public class Convidado {
     private Integer acompanhantesPermitidos;
     private StatusRsvp status; // PENDENTE, CONFIRMADO, RECUSADO
     private Integer acompanhantesConfirmados;
+    
+    private List<String> nomesConfirmados;
+    private Boolean participaraDaFesta;
+    private Boolean consomeAlcool;
+    
     private String restricoesAlimentares;
     private String mensagemNoivos;
     

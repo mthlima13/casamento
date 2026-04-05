@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/publico")
 @RequiredArgsConstructor
@@ -17,12 +19,16 @@ public class PublicoController {
 
     @PutMapping("/rsvp/{token}")
     public Convidado realizarRsvp(@PathVariable String token, @RequestBody RsvpRequest request) {
-        return rsvpService.confirmarRsvp(token, request.getStatus(), request.getAcompanhantes());
+        return rsvpService.confirmarRsvp(token, request.getStatus(), request.getAcompanhantes(), 
+                request.getNomesConfirmados(), request.getParticiparaDaFesta(), request.getConsomeAlcool());
     }
 
     @Data
     public static class RsvpRequest {
         private StatusRsvp status;
         private Integer acompanhantes;
+        private List<String> nomesConfirmados;
+        private Boolean participaraDaFesta;
+        private Boolean consomeAlcool;
     }
 }
