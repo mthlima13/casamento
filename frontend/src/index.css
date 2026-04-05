@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+  /* Cores - Champagne & Rose Gold Theme */
+  --clr-primary: 28, 45%, 85%; /* #f2e9e1 */
+  --clr-accent: 350, 40%, 75%; /* #d9a7ac - Rose Gold */
+  --clr-text-title: 30, 20%, 20%; /* Dark Brownish */
+  --clr-text-body: 30, 10%, 40%;
+  --clr-white: 0, 0%, 100%;
+  
+  /* Gradientes e Texturas */
+  --grad-main: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  --paper-texture: url("https://www.transparenttextures.com/patterns/papyrus.png");
+  
+  /* Fontes Premium */
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Roboto", sans-serif;
+  
+  /* Espaçamento & UI */
+  --radius-sm: 8px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: hsl(var(--clr-text-body));
+  background-color: #faf7f5; 
+  background-image: var(--paper-texture); /* Textura sutil de papel */
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Abstract Organic UI & Mesh Gradients */
+.mesh-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 0; /* Keep behind everything */
+    overflow: hidden;
+    background: #faf7f5;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: blob-morph 15s ease-in-out infinite alternate, blob-float 25s infinite linear;
+}
+
+.blob-1 {
+    top: -10%; left: -10%;
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(217, 167, 172, 0.8) 0%, transparent 70%); /* Rose Gold */
+    animation-delay: 0s;
+}
+
+.blob-2 {
+    bottom: -20%; right: -10%;
+    width: 70vw; height: 70vw;
+    background: radial-gradient(circle, rgba(194, 24, 91, 0.5) 0%, transparent 70%); /* Fuchsia */
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    top: 30%; left: 40%;
+    width: 50vw; height: 50vw;
+    background: radial-gradient(circle, rgba(242, 233, 225, 0.9) 0%, transparent 70%); /* Champagne */
+    animation-delay: -10s;
+}
+
+@keyframes blob-morph {
+    0% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; }
+    34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+    67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; }
+    100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; }
+}
+
+@keyframes blob-float {
+    0% { transform: rotate(0deg) translate(0, 0) scale(1); }
+    33% { transform: rotate(120deg) translate(5vw, -5vw) scale(1.1); }
+    66% { transform: rotate(240deg) translate(-5vw, 5vw) scale(0.9); }
+    100% { transform: rotate(360deg) translate(0, 0) scale(1); }
+}
+
+/* Borda Clássica Premium Refinada */
+.border-frame {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border: 1px solid rgba(217, 167, 172, 0.3);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Tipografia Gourmet */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  color: hsl(var(--clr-text-title));
+  font-weight: 700;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-sans);
+  transition: var(--transition);
+}
+
+/* Animações e Transições */
+.animate-ready .fade-in {
+  opacity: 0;
+  animation: fadeIn 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.3s; }
+.delay-2 { animation-delay: 0.6s; }
+.delay-3 { animation-delay: 0.9s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* Glassmorphism Refinado */
+.glass {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+/* Botão Estilizado */
+.btn-primary {
+  display: inline-block;
+  padding: 18px 45px;
+  background: hsl(var(--clr-accent));
+  color: #fff;
+  border-radius: 50px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 20px rgba(217, 167, 172, 0.2);
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(217, 167, 172, 0.3);
+}
+
+/* Pétalas Codificadas (Pure CSS) */
+.css-petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 50; /* Atrás dos cliques */
+    opacity: 0.4;
+    background: linear-gradient(135deg, rgba(217, 167, 172, 0.8), rgba(194, 24, 91, 0.4));
+    border-radius: 0 50% 50% 50%;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+    animation: fall linear infinite, drift ease-in-out infinite alternate;
+}
+
+@keyframes fall {
+    0% { top: -10%; }
+    100% { top: 110%; }
+}
+
+@keyframes drift {
+    0% { margin-left: 0px; transform: rotate(0deg) scale(1); }
+    50% { margin-left: 40px; transform: rotate(45deg) scale(0.9); }
+    100% { margin-left: -40px; transform: rotate(90deg) scale(1.1); }
+}
