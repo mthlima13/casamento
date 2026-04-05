@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, Link } from "react-router-dom";
 import casalImg from "../../assets/casal.jpeg";
 
 function Countdown({ targetDate }) {
@@ -79,7 +79,7 @@ function CodedPetals() {
 }
 
 export default function LandingConvite() {
-    const { configs } = useOutletContext();
+    const { configs, token } = useOutletContext();
 
     return (
         <section className="landing-container animate-ready" style={{ padding: '0 20px', textAlign: 'center', position: 'relative' }}>
@@ -145,7 +145,7 @@ export default function LandingConvite() {
                 </a>
 
                 <div style={{ marginTop: '20px' }}>
-                    <a href="#rsvp" className="btn-primary">Confirmação de Presença</a>
+                    <Link to={`/c/${token}/rsvp`} className="btn-primary">Confirmação de Presença</Link>
                 </div>
             </div>
 
