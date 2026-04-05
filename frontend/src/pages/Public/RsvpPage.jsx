@@ -51,7 +51,8 @@ export default function RsvpPage() {
             setSucesso(true);
         } catch (err) {
             console.error("Erro ao confirmar presença:", err);
-            alert("Ocorreu um erro ao confirmar sua presença. Por favor, tente novamente mais tarde.");
+            const msg = err.response?.data?.message || err.message || "Erro desconhecido";
+            alert(`Erro ao confirmar: ${msg}\n\nVerifique se o token é válido ou se o servidor está online.`);
         } finally {
             setLoading(false);
         }
