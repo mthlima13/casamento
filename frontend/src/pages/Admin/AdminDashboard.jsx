@@ -1,30 +1,39 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { api } from "../../services/api";
 
 export default function AdminDashboard() {
     // Dados Mockados para demonstração inicial
     const [stats, setStats] = useState({ total_convites: 0, confirmados: 0, recusados: 0, total_pessoas: 0 });
     const [convidados, setConvidados] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Simulação de carregamento de dados (Futuro: Buscar via API)
-        const mockData = [
-            { id: 1, nome: "João Silva", acompanhantes: 2, status: "CONFIRMADO" },
-            { id: 2, nome: "Maria Oliveira", acompanhantes: 0, status: "CONFIRMADO" },
-            { id: 3, nome: "Carlos Souza", acompanhantes: 1, status: "RECUSADO" },
-            { id: 4, nome: "Ana Costa", acompanhantes: 3, status: "CONFIRMADO" }
-        ];
-        
-        setConvidados(mockData);
-        
-        const confirmados = mockData.filter(c => c.status === "CONFIRMADO");
-        setStats({
-            total_convites: mockData.length,
-            confirmados: confirmados.length,
-            recusados: mockData.length - confirmados.length,
-            total_pessoas: confirmados.reduce((sum, c) => sum + 1 + c.acompanhantes, 0)
-        });
+        const fetchDashboard = async () => {
+            try {
+                const response = await api.get('/admin/dashboard');
+                const data = response.data;
+                setStats({
+                    total_convites: data.totalConvites,
+                    confirmados: data.confirmados,
+                    recusados: data.recusados,
+                    total_pessoas: data.totalPessoas
+                });
+                setConvidados(data.convidados || []);
+            } catch (error) {
+                console.error("Erro ao carregar dashboard:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchDashboard();
     }, []);
+
+    if (loading) return (
+        <div style={{ textAlign: "center", padding: "100px" }}>
+            <h2 className="fade-in">Carregando painel...</h2>
+        </div>
+    );
 
     return (
         <div className="admin-dashboard fade-in" style={{ padding: '60px 20px', maxWidth: '1200px', margin: '0 auto' }}>

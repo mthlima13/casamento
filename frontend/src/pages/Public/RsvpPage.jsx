@@ -16,8 +16,8 @@ export default function RsvpPage() {
             await api.put(`/publico/rsvp/${token}`, { status, acompanhantes });
             setSucesso(true);
         } catch (err) {
-            console.warn("API offline - simulando sucesso RSVP.", err);
-            setSucesso(true);
+            console.error("Erro ao confirmar presença:", err);
+            alert("Ocorreu um erro ao confirmar sua presença. Por favor, tente novamente mais tarde.");
         } finally {
             setLoading(false);
         }
