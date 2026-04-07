@@ -1,42 +1,23 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import PublicLayout from './pages/Public/PublicLayout';
-import LandingConvite from './pages/Public/LandingConvite';
-import RsvpPage from './pages/Public/RsvpPage';
-import AdminLogin from './pages/Admin/AdminLogin';
-import AdminDashboard from './pages/Admin/AdminDashboard';
-
-// Componente para Proteger Rotas do Noivo
-function PrivateRoute({ children }) {
-  const auth = sessionStorage.getItem("admin_auth") === "true";
-  const location = useLocation();
-  return auth ? children : <Navigate to="/admin/login" state={{ from: location }} replace />;
-}
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import WeddingInvitation from './components/WeddingInvitation'
+import Dashboard from './components/Dashboard'
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        {/* Fluxo do Convidado */}
-        <Route path="/" element={<Navigate to="/c/convite-exemplo-premium" replace />} />
-        
-        <Route path="/c/:token" element={<PublicLayout />}>
-          <Route index element={<LandingConvite />} />
-          <Route path="rsvp" element={<RsvpPage />} />
-        </Route>
-
-        {/* Fluxo Administrativo (Noivo) */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={
-          <PrivateRoute>
-            <AdminDashboard />
-          </PrivateRoute>
+        <Route path="/" element={
+           <WeddingInvitation
+           names={["Matheus", "Isabela"]}
+           date="Sexta-feira, 12 de Junho, 2026"
+           location="Vip festas - Caetanópolis/MG"
+         />
         } />
-        
-        {/* Fallback */}
-        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+        <Route path="/admin" element={<Dashboard />} />
       </Routes>
-    </BrowserRouter>
-  );
+    </Router>
+  )
 }
 
-export default App;
+export default App
