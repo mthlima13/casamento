@@ -4,7 +4,7 @@ import axios from 'axios';
 const FAKE_SESSION_USER_ID = "us-uuid-12345-abcdef";
 
 export const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1',
+    baseURL: import.meta.env.VITE_API_URL,
     timeout: 15000,
 });
 
