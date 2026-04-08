@@ -10,10 +10,25 @@ const Dashboard = () => {
     const ADMIN_PASSWORD = 'M@8400';
 
     useEffect(() => {
-        // Load guests from localStorage
-        const savedGuests = JSON.parse(localStorage.getItem('wedding_guests') || '[]');
-        setGuests(savedGuests);
-    }, []);
+        const fetchGuests = async () => {
+            try {
+                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+                const response = await fetch(`${apiUrl}/guests/list`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setGuests(data);
+                } else {
+                    console.error('Falha ao buscar convidados');
+                }
+            } catch (err) {
+                console.error('Erro de conexão ao buscar convidados:', err);
+            }
+        };
+
+        if (isAuthenticated) {
+            fetchGuests();
+        }
+    }, [isAuthenticated]);
 
     const handleLogin = (e) => {
         e.preventDefault();

@@ -34,20 +34,34 @@ const WeddingInvitation = ({
     setShowRsvp(true);
   };
 
-  const handleSubmitRsvp = (e) => {
+  const handleSubmitRsvp = async (e) => {
     e.preventDefault();
     if (formData.willDrinkAlcohol === null) {
       alert('Por favor, informe se irá consumir bebida alcoólica.');
       return;
     }
     
-    // SAVE TO LOCALSTORAGE (MOCK BACKEND)
-    const currentGuests = JSON.parse(localStorage.getItem('wedding_guests') || '[]');
-    localStorage.setItem('wedding_guests', JSON.stringify([...currentGuests, formData]));
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+      const response = await fetch(`${apiUrl}/guests/confirm`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    console.log('RSVP Data:', formData);
-    setConfirmed(true);
-    setShowRsvp(false);
+      if (response.ok) {
+        console.log('RSVP Data:', formData);
+        setConfirmed(true);
+        setShowRsvp(false);
+      } else {
+        alert('Erro ao enviar confirmação. Tente novamente mais tarde.');
+      }
+    } catch (err) {
+      console.error('Error submitting RSVP:', err);
+      alert('Erro de conexão com o servidor.');
+    }
   };
   return (
     <div className="min-h-screen bg-accent flex items-center justify-center p-4 selection:bg-primary selection:text-white">
