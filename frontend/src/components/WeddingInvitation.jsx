@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import coupleImg from '../assets/couple.jpeg';
 import Countdown from './Countdown';
 
@@ -35,48 +34,30 @@ const WeddingInvitation = ({
     setShowRsvp(true);
   };
 
-  const handleSubmitRsvp = async (e) => {
+  const handleSubmitRsvp = (e) => {
     e.preventDefault();
     if (formData.willDrinkAlcohol === null) {
       alert('Por favor, informe se irá consumir bebida alcoólica.');
       return;
     }
     
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
-      const response = await fetch(`${apiUrl}/guests/confirm`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    // Prepare WhatsApp message
+    const whatsappNumber = "5531984009901";
+    const messageText = `*Nova Confirmação de Casamento!* 💍\n\n` +
+      `*Nome:* ${formData.name}\n` +
+      `*Acompanhantes:* ${formData.guests}\n` +
+      `${Number(formData.guests) > 0 ? `*Nomes:* ${formData.companionNames}\n` : ''}` +
+      `*Vai na festa?* ${formData.willAttendParty ? 'Sim ✅' : 'Não ❌'}\n` +
+      `*Consome álcool?* ${formData.willDrinkAlcohol ? 'Sim 🍷' : 'Não 🥤'}`;
+    
+    const encodedMessage = encodeURIComponent(messageText);
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-      if (response.ok) {
-        // Prepare WhatsApp message
-        const whatsappNumber = "5531984009901";
-        const messageText = `*Nova Confirmação de Casamento!* 💍\n\n` +
-          `*Nome:* ${formData.name}\n` +
-          `*Acompanhantes:* ${formData.guests}\n` +
-          `${formData.guests > 0 ? `*Nomes:* ${formData.companionNames}\n` : ''}` +
-          `*Vai na festa?* ${formData.willAttendParty ? 'Sim ✅' : 'Não ❌'}\n` +
-          `*Consome álcool?* ${formData.willDrinkAlcohol ? 'Sim 🍷' : 'Não 🥤'}`;
-        
-        const encodedMessage = encodeURIComponent(messageText);
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-        setConfirmed(true);
-        setShowRsvp(false);
-        
-        // Open WhatsApp in a new window/tab
-        window.open(whatsappUrl, '_blank');
-      } else {
-        alert('Erro ao enviar confirmação. Tente novamente mais tarde.');
-      }
-    } catch (err) {
-      console.error('Error submitting RSVP:', err);
-      alert('Erro de conexão com o servidor.');
-    }
+    setConfirmed(true);
+    setShowRsvp(false);
+    
+    // Open WhatsApp in a new window/tab
+    window.open(whatsappUrl, '_blank');
   };
   return (
     <div className="min-h-screen bg-accent flex items-center justify-center p-4 selection:bg-primary selection:text-white">
@@ -340,10 +321,6 @@ const WeddingInvitation = ({
           </svg>
         </div>
 
-        {/* Hidden Admin Access */}
-        <div className="absolute bottom-4 left-0 right-0 text-center">
-            <Link to="/admin" className="text-[8px] text-secondary/10 uppercase tracking-widest hover:text-primary/40 transition-all font-sans">Acesso Noivos</Link>
-        </div>
       </motion.div>
     </div>
   );
