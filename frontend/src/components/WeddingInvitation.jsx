@@ -53,9 +53,23 @@ const WeddingInvitation = ({
       });
 
       if (response.ok) {
-        console.log('RSVP Data:', formData);
+        // Prepare WhatsApp message
+        const whatsappNumber = "5531984009901";
+        const messageText = `*Nova Confirmação de Casamento!* 💍\n\n` +
+          `*Nome:* ${formData.name}\n` +
+          `*Acompanhantes:* ${formData.guests}\n` +
+          `${formData.guests > 0 ? `*Nomes:* ${formData.companionNames}\n` : ''}` +
+          `*Vai na festa?* ${formData.willAttendParty ? 'Sim ✅' : 'Não ❌'}\n` +
+          `*Consome álcool?* ${formData.willDrinkAlcohol ? 'Sim 🍷' : 'Não 🥤'}`;
+        
+        const encodedMessage = encodeURIComponent(messageText);
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
         setConfirmed(true);
         setShowRsvp(false);
+        
+        // Open WhatsApp in a new window/tab
+        window.open(whatsappUrl, '_blank');
       } else {
         alert('Erro ao enviar confirmação. Tente novamente mais tarde.');
       }
