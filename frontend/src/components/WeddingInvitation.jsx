@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import coupleImg from '../assets/couple.jpeg';
 import Countdown from './Countdown';
 
@@ -327,7 +328,7 @@ const WeddingInvitation = ({
 
         {/* Hidden Admin Access */}
         <div className="absolute bottom-4 left-0 right-0 text-center">
-            <a href="/admin" className="text-[8px] text-secondary/10 uppercase tracking-widest hover:text-primary/40 transition-all font-sans">Acesso Noivos</a>
+            <Link to="/admin" className="text-[8px] text-secondary/10 uppercase tracking-widest hover:text-primary/40 transition-all font-sans">Acesso Noivos</Link>
         </div>
       </motion.div>
     </div>
