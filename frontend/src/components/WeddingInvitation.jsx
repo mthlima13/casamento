@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import coupleImg from '../assets/couple.jpeg';
 import Countdown from './Countdown';
+import weddingConfig from '../config';
 
-const WeddingInvitation = ({ 
-  names = ["Matheus", "Isabela"], 
-  date = "12 de Junho, 2026", 
-  time = "16:30",
-  location = "Vip festas - Caetanópolis/MG",
-  message = "Assim, eles já não são dois, mas uma só carne. (Mateus 19:6)"
+const WeddingInvitation = ({
+  names = weddingConfig.names,
+  date = weddingConfig.date,
+  time = weddingConfig.time,
+  location = weddingConfig.location,
+  message = weddingConfig.message,
+  whatsappNumber = weddingConfig.whatsappNumber
 }) => {
   const [showRsvp, setShowRsvp] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
@@ -42,7 +44,6 @@ const WeddingInvitation = ({
     }
     
     // Prepare WhatsApp message
-    const whatsappNumber = "5531984009901";
     const messageText = `*Nova Confirmação de Casamento!* 💍\n\n` +
       `*Nome:* ${formData.name}\n` +
       `*Acompanhantes:* ${formData.guests}\n` +
@@ -151,7 +152,7 @@ const WeddingInvitation = ({
           </a>
           <div className="h-[1px] w-24 bg-primary/20 mx-auto pt-4" />
           
-          <Countdown targetDate="2026-06-12T16:30:00" />
+          <Countdown targetDate={weddingConfig.targetDate} />
         </motion.div>
 
         {/* Footer Interaction */}

@@ -1,48 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Dashboard = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
     const [guests, setGuests] = useState([]);
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const ADMIN_PASSWORD = 'M@8400';
-
-    useEffect(() => {
-        const fetchGuests = async () => {
-            try {
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
-                const response = await fetch(`${apiUrl}/guests/list`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setGuests(data);
-                } else {
-                    console.error('Falha ao buscar convidados');
-                }
-            } catch (err) {
-                console.error('Erro de conexão ao buscar convidados:', err);
-            }
-        };
-
-        if (isAuthenticated) {
-            fetchGuests();
-        }
-    }, [isAuthenticated]);
-
-    const handleLogin = (e) => {
+    // A senha digitada no login é enviada como header e validada no backend.
+    // Nenhuma senha fica no código-fonte do frontend.
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (password === ADMIN_PASSWORD) {
-            setIsAuthenticated(true);
-            setError('');
-        } else {
-            setError('Senha incorreta. Tente novamente.');
+        if (!password) return;
+        setLoading(true);
+        setError('');
+
+        try {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+            const response = await fetch(`${apiUrl}/guests/list`, {
+                headers: { 'x-admin-key': password }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setGuests(data);
+                setIsAuthenticated(true);
+                sessionStorage.setItem('weddingAdminKey', password);
+            } else if (response.status === 401) {
+                setError('Senha incorreta. Tente novamente.');
+            } else {
+                setError('Erro no servidor. Tente novamente.');
+            }
+        } catch (err) {
+            console.error('Erro de conexão:', err);
+            setError('Erro de conexão com o servidor.');
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleLogout = () => {
         setIsAuthenticated(false);
         setPassword('');
+        sessionStorage.removeItem('weddingAdminKey');
     };
 
     if (!isAuthenticated) {
@@ -67,9 +68,10 @@ const Dashboard = () => {
                         {error && <p className="text-red-400 text-[10px] italic">{error}</p>}
                         <button 
                             type="submit"
-                            className="w-full py-4 bg-secondary text-accent text-xs tracking-widest uppercase font-bold hover:bg-primary transition-all duration-500 rounded-sm"
+                            disabled={loading}
+                            className="w-full py-4 bg-secondary text-accent text-xs tracking-widest uppercase font-bold hover:bg-primary transition-all duration-500 rounded-sm disabled:opacity-50"
                         >
-                            Entrar
+                            {loading ? 'Entrando...' : 'Entrar'}
                         </button>
                     </form>
                     <a href="/" className="inline-block mt-8 text-[10px] text-secondary/40 uppercase tracking-widest hover:text-primary transition-all underline decoration-primary/20">Voltar para o convite</a>

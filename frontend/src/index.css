@@ -2,9 +2,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #C19A6B;
-  --color-secondary: #3E4C3E;
-  --color-accent: #FDF5E6;
+  --color-primary: #E07A5F;   /* laranja terracota — botões, títulos, detalhes */
+  --color-secondary: #6D3B4F; /* rosa profundo (vinho rosé) — textos */
+  --color-accent: #FDF1E7;    /* off-white pêssego — fundo */
   
   --font-serif: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
