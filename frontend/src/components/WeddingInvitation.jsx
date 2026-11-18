@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import coupleImg from '../assets/couple.jpeg';
 import Countdown from './Countdown';
 import weddingConfig from '../config';
+
+// Foto do casal: coloque o arquivo couple.jpeg (ou couple.jpg / couple.png)
+// em frontend/src/assets/ e ele aparece automaticamente no convite.
+// Enquanto não houver foto, é exibido o monograma com as iniciais.
+const photoModules = import.meta.glob('../assets/couple.{jpeg,jpg,png,webp}', { eager: true, import: 'default' });
+const coupleImg = Object.values(photoModules)[0] ?? null;
 
 const WeddingInvitation = ({
   names = weddingConfig.names,
@@ -91,19 +96,27 @@ const WeddingInvitation = ({
           </p>
         </motion.div>
 
-        {/* Hero Image */}
+        {/* Hero Image (ou monograma enquanto a foto não for enviada) */}
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ delay: 0.2, duration: 1 }}
            className="mb-8 relative"
         >
-          <div className="w-48 h-48 md:w-64 md:h-64 mx-auto overflow-hidden rounded-full border-4 border-white shadow-xl">
-             <img 
-               src={coupleImg} 
-               alt="O Casal" 
-               className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700 scale-110 hover:scale-100"
-             />
+          <div className="w-48 h-48 md:w-64 md:h-64 mx-auto overflow-hidden rounded-full border-4 border-white shadow-xl flex items-center justify-center bg-secondary/5">
+            {coupleImg ? (
+              <img
+                src={coupleImg}
+                alt="O Casal"
+                className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700 scale-110 hover:scale-100"
+              />
+            ) : (
+              <div className="text-center px-6">
+                <p className="text-primary text-6xl md:text-8xl font-serif leading-none">
+                  {names[0][0]} <span className="text-secondary/30 text-4xl md:text-6xl italic">&</span> {names[1][0]}
+                </p>
+              </div>
+            )}
           </div>
           <div className="absolute inset-0 border-[1px] border-primary/20 rounded-full w-[13.5rem] h-[13.5rem] md:w-[17.5rem] md:h-[17.5rem] -m-3 mx-auto pointer-events-none" />
         </motion.div>
