@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import Sparkles from './Sparkles';
 
 const EnvelopeIntro = ({ names = ['', ''], title = 'Você está sendo convidado(a)', onOpened }) => {
   const [phase, setPhase] = useState('closed'); // closed | opening
@@ -31,6 +32,16 @@ const EnvelopeIntro = ({ names = ['', ''], title = 'Você está sendo convidado(
       role="dialog"
       aria-label="Abertura do convite"
     >
+      {/* Brilhos cintilantes ao fundo */}
+      <motion.div
+        animate={isOpening ? { opacity: 0, scale: 1.12 } : { opacity: 1, scale: 1 }}
+        transition={{ duration: prefersReducedMotion ? 0.01 : 0.9 }}
+        className="absolute inset-0 pointer-events-none"
+      >
+        <Sparkles count={18} seed={3} opacity={0.75} />
+        <Sparkles count={10} seed={11} opacity={0.45} />
+      </motion.div>
+
       {/* Texto de convite */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -108,10 +119,21 @@ const EnvelopeIntro = ({ names = ['', ''], title = 'Você está sendo convidado(
           transition={{ duration: prefersReducedMotion ? 0.01 : 0.4 }}
           className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 z-40"
         >
-          <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-secondary text-accent flex items-center justify-center shadow-lg shadow-secondary/30 border border-accent/20 group-hover:scale-105 transition-transform duration-500">
+          <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-secondary text-accent flex items-center justify-center shadow-lg shadow-secondary/30 border border-accent/20 overflow-hidden group-hover:scale-105 transition-transform duration-500">
             <span className="font-serif text-lg md:text-xl tracking-wide">
               {names[0][0]}<span className="text-accent/60 italic mx-[1px]">&</span>{names[1][0]}
             </span>
+            {/* Brilho deslizante sobre o selo */}
+            <motion.div
+              aria-hidden="true"
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.5) 50%, transparent 68%)',
+              }}
+              animate={prefersReducedMotion ? {} : { x: ['-130%', '130%'] }}
+              transition={{ duration: 2.6, repeat: Infinity, repeatDelay: 2.4, ease: 'easeInOut' }}
+            />
           </div>
         </motion.div>
       </button>

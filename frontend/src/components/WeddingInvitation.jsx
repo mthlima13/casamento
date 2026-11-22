@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Countdown from './Countdown';
 import EnvelopeIntro from './EnvelopeIntro';
+import Sparkles from './Sparkles';
 import weddingConfig from '../config';
 
 // Foto do casal: coloque o arquivo couple.jpeg (ou couple.jpg / couple.png)
@@ -100,8 +101,11 @@ const WeddingInvitation = ({
         initial={{ opacity: introDone ? 1 : 0, scale: introDone ? 1 : 0.98 }}
         animate={introDone ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
         transition={{ duration: 0.9, ease: 'easeOut' }}
-        className="min-h-screen bg-accent flex items-center justify-center p-4 selection:bg-primary selection:text-white"
+        className="min-h-screen bg-accent flex items-center justify-center p-4 selection:bg-primary selection:text-white relative overflow-hidden"
       >
+        {/* Brilhos sutis ao fundo */}
+        <Sparkles count={12} seed={21} opacity={0.35} />
+
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
