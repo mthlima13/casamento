@@ -143,6 +143,7 @@ const WeddingInvitation = ({
               <img
                 src={coupleImg}
                 alt="O Casal"
+                style={{ objectPosition: '50% 32%' }}
                 className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700 scale-110 hover:scale-100"
               />
             ) : (
