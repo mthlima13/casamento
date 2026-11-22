@@ -23,7 +23,7 @@ const Sparkles = ({
       id: i,
       left: rand() * 100,
       top: rand() * 100,
-      size: 5 + rand() * 11,
+      size: 4 + rand() * 6,
       delay: rand() * 4,
       duration: 2.4 + rand() * 2.6,
       drift: (rand() - 0.5) * 14,
@@ -49,8 +49,8 @@ const Sparkles = ({
             prefersReducedMotion
               ? { opacity: 0.35, scale: 0.8 }
               : {
-                  opacity: [0, 0.9, 0],
-                  scale: [0.3, 1, 0.3],
+                  opacity: [0, 0.7, 0],
+                  scale: [0.4, 1, 0.4],
                   y: [0, s.drift, 0],
                   rotate: [s.rotate, s.rotate + 25, s.rotate],
                 }

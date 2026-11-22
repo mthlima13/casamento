@@ -34,12 +34,11 @@ const EnvelopeIntro = ({ names = ['', ''], title = 'Você está sendo convidado(
     >
       {/* Brilhos cintilantes ao fundo */}
       <motion.div
-        animate={isOpening ? { opacity: 0, scale: 1.12 } : { opacity: 1, scale: 1 }}
+        animate={isOpening ? { opacity: 0, scale: 1.06 } : { opacity: 1, scale: 1 }}
         transition={{ duration: prefersReducedMotion ? 0.01 : 0.9 }}
         className="absolute inset-0 pointer-events-none"
       >
-        <Sparkles count={18} seed={3} opacity={0.75} />
-        <Sparkles count={10} seed={11} opacity={0.45} />
+        <Sparkles count={7} seed={3} opacity={0.35} />
       </motion.div>
 
       {/* Texto de convite */}
@@ -129,10 +128,10 @@ const EnvelopeIntro = ({ names = ['', ''], title = 'Você está sendo convidado(
               className="absolute inset-0 pointer-events-none"
               style={{
                 background:
-                  'linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.5) 50%, transparent 68%)',
+                  'linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.22) 50%, transparent 64%)',
               }}
               animate={prefersReducedMotion ? {} : { x: ['-130%', '130%'] }}
-              transition={{ duration: 2.6, repeat: Infinity, repeatDelay: 2.4, ease: 'easeInOut' }}
+              transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 4.5, ease: 'easeInOut' }}
             />
           </div>
         </motion.div>
