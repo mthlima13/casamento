@@ -22,7 +22,7 @@ export const weddingConfig = {
 
   // --- Confirmação por WhatsApp ---
   // Número com código do país e DDD, apenas dígitos. Ex: 5531999999999
-  whatsappNumber: '5531983904170',
+  whatsappNumber: '5531982601791',
 };
 
 export default weddingConfig;
