@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Countdown from './Countdown';
+import EnvelopeIntro from './EnvelopeIntro';
 import weddingConfig from '../config';
 
 // Foto do casal: coloque o arquivo couple.jpeg (ou couple.jpg / couple.png)
@@ -19,6 +20,24 @@ const WeddingInvitation = ({
 }) => {
   const [showRsvp, setShowRsvp] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+
+  // Abertura do envelope: mostra a animação na primeira visita da sessão
+  const [introDone, setIntroDone] = useState(() => {
+    try {
+      return sessionStorage.getItem('weddingIntroSeen') === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  const handleIntroOpened = () => {
+    try {
+      sessionStorage.setItem('weddingIntroSeen', '1');
+    } catch {
+      // sessionStorage indisponível (modo privado) — sem problema
+    }
+    setIntroDone(true);
+  };
   
   // RSVP Form State
   const [formData, setFormData] = useState({
@@ -66,13 +85,29 @@ const WeddingInvitation = ({
     window.open(whatsappUrl, '_blank');
   };
   return (
-    <div className="min-h-screen bg-accent flex items-center justify-center p-4 selection:bg-primary selection:text-white">
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="max-w-xl w-full bg-white shadow-[0_0_50px_rgba(0,0,0,0.03)] border border-primary/20 relative overflow-hidden p-12 md:p-20 text-center"
+    <>
+      <AnimatePresence>
+        {!introDone && (
+          <EnvelopeIntro
+            names={names}
+            title={weddingConfig.inviteTitle}
+            onOpened={handleIntroOpened}
+          />
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        initial={{ opacity: introDone ? 1 : 0, scale: introDone ? 1 : 0.98 }}
+        animate={introDone ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
+        transition={{ duration: 0.9, ease: 'easeOut' }}
+        className="min-h-screen bg-accent flex items-center justify-center p-4 selection:bg-primary selection:text-white"
       >
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="max-w-xl w-full bg-white shadow-[0_0_50px_rgba(0,0,0,0.03)] border border-primary/20 relative overflow-hidden p-12 md:p-20 text-center"
+        >
         {/* Subtle Decorative Border (Code-based) */}
         <div className="absolute inset-4 border border-primary/10 pointer-events-none" />
         <div className="absolute inset-8 border border-primary/5 pointer-events-none" />
@@ -336,7 +371,8 @@ const WeddingInvitation = ({
         </div>
 
       </motion.div>
-    </div>
+      </motion.div>
+    </>
   );
 };
 

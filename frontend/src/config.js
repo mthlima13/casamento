@@ -15,6 +15,9 @@ export const weddingConfig = {
   location: 'Local a definir — em breve',
   message: 'Assim, eles já não são dois, mas uma só carne. (Mateus 19:6)',
 
+  // --- Abertura (envelope) ---
+  inviteTitle: 'Você está sendo convidado(a)',
+
   // --- Confirmação por WhatsApp ---
   // Número com código do país e DDD, apenas dígitos. Ex: 5531999999999
   whatsappNumber: '5531982601791',
