@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Countdown from './Countdown';
 import EnvelopeIntro from './EnvelopeIntro';
+import Sparkles from './Sparkles';
 import weddingConfig from '../config';
 
 // Foto do casal: coloque o arquivo couple.jpeg (ou couple.jpg / couple.png)
@@ -100,8 +101,17 @@ const WeddingInvitation = ({
         initial={{ opacity: introDone ? 1 : 0, scale: introDone ? 1 : 0.98 }}
         animate={introDone ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
         transition={{ duration: 0.9, ease: 'easeOut' }}
-        className="min-h-screen bg-accent flex items-center justify-center p-4 selection:bg-primary selection:text-white"
+        className="min-h-screen bg-accent flex items-center justify-center p-4 selection:bg-primary selection:text-white relative overflow-hidden"
       >
+        {/* Brilhos cintilantes ao fundo do convite */}
+        <Sparkles count={12} seed={21} opacity={0.45} />
+
+        {/* Halo suave dourado atrás do cartão */}
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] rounded-full bg-primary/10 blur-3xl" />
+          <div className="absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] rounded-full bg-[#F2B8A2]/20 blur-3xl" />
+        </div>
+
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -111,6 +121,18 @@ const WeddingInvitation = ({
         {/* Subtle Decorative Border (Code-based) */}
         <div className="absolute inset-4 border border-primary/10 pointer-events-none" />
         <div className="absolute inset-8 border border-primary/5 pointer-events-none" />
+
+        {/* Reflexo dourado que cruza o cartão de tempos em tempos */}
+        <motion.div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(115deg, transparent 42%, rgba(233,200,138,0.22) 50%, transparent 58%)',
+          }}
+          animate={{ x: ['-120%', '120%'] }}
+          transition={{ duration: 3.6, repeat: Infinity, repeatDelay: 7, ease: 'easeInOut' }}
+        />
         
         {/* Top Decoration */}
         <div className="flex justify-center mb-8">

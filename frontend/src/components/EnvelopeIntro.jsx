@@ -38,7 +38,7 @@ const EnvelopeIntro = ({ names = ['', ''], title = 'Você está sendo convidado(
         transition={{ duration: prefersReducedMotion ? 0.01 : 0.9 }}
         className="absolute inset-0 pointer-events-none"
       >
-        <Sparkles count={7} seed={3} opacity={0.35} />
+        <Sparkles count={10} seed={3} opacity={0.45} />
       </motion.div>
 
       {/* Texto de convite */}
