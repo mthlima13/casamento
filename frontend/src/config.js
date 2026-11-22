@@ -10,9 +10,11 @@ export const weddingConfig = {
 
   // --- Evento ---
   date: 'Sexta-feira, 29 de Janeiro, 2027', // texto exibido no convite
-  time: '16:00',                            // horário exibido
-  targetDate: '2027-01-29T16:00:00',        // usado pela contagem regressiva (ISO)
-  location: 'Local a definir — em breve',
+  time: '16:30',                            // horário exibido
+  targetDate: '2027-01-29T16:30:00',        // usado pela contagem regressiva (ISO)
+  location: 'Arboredo Espaço e Lazer — Paraopeba/MG',
+  // Link do Google Maps aberto pelo botão "Ver no Mapa"
+  mapsUrl: 'https://maps.app.goo.gl/gXd89zwcoWDLxAWy9',
   message: 'Assim, eles já não são dois, mas uma só carne. (Mateus 19:6)',
 
   // --- Abertura (envelope) ---

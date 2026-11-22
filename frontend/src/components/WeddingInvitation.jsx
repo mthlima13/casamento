@@ -214,7 +214,7 @@ const WeddingInvitation = ({
             {location}
           </p>
           <a 
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`} 
+            href={weddingConfig.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`} 
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-block text-[10px] text-primary/60 hover:text-primary uppercase tracking-widest transition-all underline decoration-primary/20 hover:decoration-primary"
